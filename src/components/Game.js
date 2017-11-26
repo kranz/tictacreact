@@ -58,6 +58,25 @@ class Game extends React.Component {
     return this.state.xIsNext ? 'X' : 'O';
   }
 
+  resetGame() {
+  	if(!window.confirm('Sure ?')) {
+  		return;
+  	}
+
+  	this.setState({
+  		history:[{
+  			squares: Array(9).fill(null),
+	        coord: {
+    	      col:0,
+        	  row:0,
+	        }
+  		}],
+  		xIsNext:true,
+  		stepNumber: 0,
+  		lastKey: 0
+  	});
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -69,7 +88,8 @@ class Game extends React.Component {
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
             beBold= {this.state.beBold}
-          />   
+          />
+          <button onClick={() => this.resetGame()}>Reset</button>   
         </div>
         <div className="game-info">
           <Status winner={calculateWinner(current.squares.slice())} nextPlayer={this.nextPlayer()} />

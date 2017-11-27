@@ -17,7 +17,6 @@ class Game extends React.Component {
       }],
       xIsNext: true,
       stepNumber: 0,
-      confirmReset: false,
       lastKey: 0
     }
   }
@@ -71,7 +70,6 @@ class Game extends React.Component {
   		}],
   		xIsNext:true,
   		stepNumber: 0,
-  		confirmReset: false,
   		lastKey: 0
   	});
   }
@@ -89,8 +87,6 @@ class Game extends React.Component {
             beBold= {this.state.beBold}
           />
           <ResetButton 
-          	confirmReset={this.state.confirmReset}
-          	setConfirm={(value) => this.setState({confirmReset: value})}
           	onReset={() => this.resetGame()} />
         </div>
         <div className="game-info">

@@ -15,7 +15,7 @@ class Game extends React.Component {
           row:0,
         }
       }],
-      xIsNext: true,
+      nextPlayer: 'X',
       stepNumber: 0,
       lastKey: 0
     }
@@ -29,7 +29,7 @@ class Game extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.nextPlayer();
+    squares[i] = this.state.nextPlayer;
     const myrow = Math.floor(i/3) +1;
     const mycol = (i+1) - 3*(myrow-1);
     this.setState({
@@ -41,7 +41,7 @@ class Game extends React.Component {
         }
       }]),
       stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
+      nextPlayer: (this.state.nextPlayer === 'X') ? 'O' : 'X',
       lastKey: lastKey
     });
   }  
@@ -51,12 +51,9 @@ class Game extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+      nextPlayer: (step % 2) ? 'O' : 'X',
       lastKey: lastKey
     });
-  }
-
-  nextPlayer() {
-  	return this.state.xIsNext ? 'X' : 'O';
   }
 
   resetGame() {
@@ -68,7 +65,7 @@ class Game extends React.Component {
         	  row:0,
 	        }
   		}],
-  		xIsNext:true,
+  		nextPlayer:'X',
   		stepNumber: 0,
   		lastKey: 0
   	});
@@ -90,7 +87,7 @@ class Game extends React.Component {
           	onReset={() => this.resetGame()} />
         </div>
         <div className="game-info">
-          <Status winner={calculateWinner(current.squares.slice())} nextPlayer={this.nextPlayer()} />
+          <Status winner={calculateWinner(current.squares.slice())} nextPlayer={this.state.nextPlayer} />
           <MoveList 
             history={this.state.history} 
             onClick={(move) => this.jumpTo(move)} 

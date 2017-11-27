@@ -74,7 +74,9 @@ class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-
+//    const lastSquares = history[history.length -1].squares;
+//    const winner = calculateWinner(lastSquares);
+	const winner = calculateWinner(current.squares.slice());    
     return (
       <div className="game">
         <div className="game-board">
@@ -87,11 +89,12 @@ class Game extends React.Component {
           	onReset={() => this.resetGame()} />
         </div>
         <div className="game-info">
-          <Status winner={calculateWinner(current.squares.slice())} nextPlayer={this.state.nextPlayer} />
+          <Status winner={winner} nextPlayer={this.state.nextPlayer} />
           <MoveList 
             history={this.state.history} 
             onClick={(move) => this.jumpTo(move)} 
-            stepNumber={this.state.stepNumber} />
+            stepNumber={this.state.stepNumber}
+            winner={winner} />
         </div>
       </div>
     );

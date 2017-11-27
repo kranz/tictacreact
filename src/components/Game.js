@@ -29,7 +29,7 @@ class Game extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    squares[i] = this.nextPlayer().sign;
     const myrow = Math.floor(i/3) +1;
     const mycol = (i+1) - 3*(myrow-1);
     this.setState({
@@ -56,7 +56,11 @@ class Game extends React.Component {
   }
 
   nextPlayer() {
-    return this.state.xIsNext ? 'X' : 'O';
+  	if (this.state.xIsNext) {
+  		return { sign: 'X', color:'green'}
+  	} else {
+	    return { sign: 'O', color:'red'};
+  	}
   }
 
   resetGame() {

@@ -7,7 +7,7 @@ function MoveList(props) {
     if(!move) {
       desc = 'Game start';
     } else if (move === props.history.length -1 && props.winner) {
-      desc = coord + ' Winner is ' + props.winner;
+      desc = <b>{coord} Winner is {props.winner}</b>;
     } else if (move === props.stepNumber) {
       desc = <b>{coord} Move # {move}</b>;
     } else {

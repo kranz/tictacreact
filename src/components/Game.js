@@ -91,7 +91,10 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <Status winner={calculateWinner(current.squares.slice())} nextPlayer={this.nextPlayer()} />
-          <MoveList history={this.state.history} onClick={(move) => this.jumpTo(move)} />
+          <MoveList 
+            history={this.state.history} 
+            onClick={(move) => this.jumpTo(move)} 
+            stepNumber={this.state.stepNumber} />
         </div>
       </div>
     );

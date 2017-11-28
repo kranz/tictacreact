@@ -1,5 +1,5 @@
 import React from 'react';
-import Board from './Board';
+import Board, {SIZE as BOARD_SIZE} from './Board';
 import MoveList from './MoveList';
 import Status from './Status';
 import ResetButton from './ResetButton';
@@ -30,8 +30,8 @@ class Game extends React.Component {
       return;
     }
     squares[i] = this.state.nextPlayer;
-    const myrow = Math.floor(i/3) +1;
-    const mycol = (i+1) - 3*(myrow-1);
+    const myrow = Math.floor(i / BOARD_SIZE) +1;
+    const mycol = (i + 1) - BOARD_SIZE * (myrow - 1);
     this.setState({
       history: history.concat([{
         squares: squares,
@@ -122,6 +122,8 @@ function calculateWinner(squares) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
+    console.dir(lines[i]);
+    console.log(squares[a],squares[b],squares[c]);
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return {player:squares[a], line: lines[i]};
     }

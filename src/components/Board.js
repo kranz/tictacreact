@@ -1,7 +1,7 @@
 import React from 'react';
 import Square from './Square';
 
-export const SIZE = 4;
+export const SIZE = 3;
 
 class Board extends React.Component {
   renderSquare(i) {

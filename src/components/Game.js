@@ -9,7 +9,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       history: [{
-        squares: Array(9).fill(null),
+        squares: Array(BOARD_SIZE*BOARD_SIZE).fill(null),
         coord: {
           col:0,
           row:0,
@@ -59,7 +59,7 @@ class Game extends React.Component {
   resetGame() {
   	this.setState({
   		history:[{
-  			squares: Array(9).fill(null),
+  			squares: Array(BOARD_SIZE*BOARD_SIZE).fill(null),
 	        coord: {
     	      col:0,
         	  row:0,
@@ -110,22 +110,40 @@ class Game extends React.Component {
 export default Game;
 
 function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    console.dir(lines[i]);
-    console.log(squares[a],squares[b],squares[c]);
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return {player:squares[a], line: lines[i]};
+  const size = BOARD_SIZE;
+  var lines = [];
+  for(let i = 0; i<size;i++) {
+    lines[i]=[];
+    for(let j = 0; j<size;j++) {
+      let idx = i * size + j;
+      lines[i].push(idx)
+    }
+  }
+  for(let i = 0; i<size;i++) {
+    lines[i+size]=[];
+    for(let j = 0; j<size; j++) {
+      let idx = j*size + i;
+      lines[i+size].push(idx)
+    }
+  }
+  lines[size*2] = [];
+  lines[size*2+1] = [];
+  for (let k =0; k<size; k++) {
+    lines[size*2].push(k*(size+1))
+    lines[size*2+1].push((k+1)*(size-1))
+  }
+  for (let m = 0; m < lines.length; m++) {
+    const riga = lines[m];
+    let continua = (squares[riga[0]] !== null) ? true : false;
+    for (let n = 0; n<size-1; n++) {
+      if((squares[riga[n]] === squares[riga[n+1]]) && continua) {
+        continua = true;
+      } else {
+        continua = false;
+      }
+    }
+    if (continua) {
+      return {player:squares[riga[0]], line: lines[m]};
     }
   }
   return null;

@@ -3,6 +3,7 @@ import Board, {SIZE as BOARD_SIZE} from './Board';
 import MoveList from './MoveList';
 import Status from './Status';
 import ResetButton from './ResetButton';
+import Navigation from './Navigation';
 
 class Game extends React.Component {
   constructor(props) {
@@ -91,8 +92,11 @@ class Game extends React.Component {
             beBold= {this.state.beBold}
             winnerLine={winnerLine}
           />
-          <ResetButton 
-          	onReset={() => this.resetGame()} />
+          <ResetButton onReset={() => this.resetGame()} />
+          <Navigation 
+            stepNumber={this.state.stepNumber}
+            historyLength={history.length}
+            onClick={i => this.jumpTo(i)} />
         </div>
         <div className="game-info">
           <Status winner={winnerPlayer} nextPlayer={this.state.nextPlayer} />
